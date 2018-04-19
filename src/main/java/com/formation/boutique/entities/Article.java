@@ -1,12 +1,11 @@
 package com.formation.boutique.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 public class Article {
@@ -17,13 +16,111 @@ public class Article {
     @NotNull
     @Positive
     private Float prix;
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Positive
     private Integer nbVentes;
     @Positive
-    @Column(length = 2)
     @Size(min = 1, max = 2)
     private Integer promo;
 
+    @OneToMany(mappedBy = "article")
+    private Collection<Image> images;
+
+    @ManyToOne
+    private Categorie categorie;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "commande",
+//            joinColumns = { @JoinColumn(name = "code") },
+//            inverseJoinColumns = { @JoinColumn(name = "email") })
+    @OneToMany(mappedBy = "article")
+    private Collection<Commande> commandes = new ArrayList<>();
+
+    public Article() {
+    }
+
+    public Article(Long code, @NotNull String nom, @NotNull @Positive Float prix, String description, @Positive Integer nbVentes, @Positive @Size(min = 1, max = 2) Integer promo, Collection<Image> images, Categorie categorie, Collection<Commande> commandes) {
+        this.code = code;
+        this.nom = nom;
+        this.prix = prix;
+        this.description = description;
+        this.nbVentes = nbVentes;
+        this.promo = promo;
+        this.images = images;
+        this.categorie = categorie;
+        this.commandes = commandes;
+    }
+
+    public Long getCode() {
+        return code;
+    }
+
+    public void setCode(Long code) {
+        this.code = code;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Float getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Float prix) {
+        this.prix = prix;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getNbVentes() {
+        return nbVentes;
+    }
+
+    public void setNbVentes(Integer nbVentes) {
+        this.nbVentes = nbVentes;
+    }
+
+    public Integer getPromo() {
+        return promo;
+    }
+
+    public void setPromo(Integer promo) {
+        this.promo = promo;
+    }
+
+    public Collection<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Collection<Image> images) {
+        this.images = images;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public Collection<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Collection<Commande> commandes) {
+        this.commandes = commandes;
+    }
 }

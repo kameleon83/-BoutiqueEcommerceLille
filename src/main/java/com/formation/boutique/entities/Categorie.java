@@ -1,6 +1,7 @@
 package com.formation.boutique.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,11 +13,12 @@ public class Categorie {
     private Long id;
 
     @NotNull
+    @NotBlank
     @Column(length = 100)
     private String nom;
 
     @OneToOne
-    private Categorie categorie;
+    private Categorie parent;
 
     @OneToMany(mappedBy = "categorie")
     private Collection<Article> articles = new ArrayList<>();
@@ -28,9 +30,9 @@ public class Categorie {
         this.nom = nom;
     }
 
-    public Categorie(@NotNull String nom, Categorie categorie, Collection<Article> articles) {
+    public Categorie(@NotNull String nom, Categorie parent, Collection<Article> articles) {
         this.nom = nom;
-        this.categorie = categorie;
+        this.parent = parent;
         this.articles = articles;
     }
 
@@ -50,12 +52,12 @@ public class Categorie {
         this.nom = nom;
     }
 
-    public Categorie getCategorie() {
-        return categorie;
+    public Categorie getParent() {
+        return parent;
     }
 
-    public void setCategorie(Categorie categorie) {
-        this.categorie = categorie;
+    public void setParent(Categorie parent) {
+        this.parent = parent;
     }
 
     public Collection<Article> getArticles() {
@@ -64,5 +66,14 @@ public class Categorie {
 
     public void setArticles(Collection<Article> articles) {
         this.articles = articles;
+    }
+
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", parent=" + parent +
+                '}';
     }
 }

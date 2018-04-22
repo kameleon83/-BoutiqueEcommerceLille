@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title th:text="${title}"></title>
 </head>
 <body>
-$END$
+<h1 th:text="${h1}"></h1>
+
+<form th:action="@{/form}" th:method="post">
+    <input type="text" th:field="*{cat.nom}">
+    <span th:if="${#fields.hasErrors('cat.nom')}" th:errors="*{cat.nom}"></span>
+    <textarea th:field="*{article.description}" cols="30" rows="10"></textarea>
+    <input type="submit" value="Valider">
+</form>
+
+
 </body>
 </html>

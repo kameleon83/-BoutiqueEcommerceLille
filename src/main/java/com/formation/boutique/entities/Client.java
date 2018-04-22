@@ -1,18 +1,21 @@
 package com.formation.boutique.entities;
 
-
-
-import com.formation.boutique.enumerations.Civilite;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.formation.boutique.enumerations.Civilite;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Client {
@@ -52,18 +55,21 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private Civilite civilite;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "commande",
-//            joinColumns = { @JoinColumn(name = "email") },
-//            inverseJoinColumns = { @JoinColumn(name = "code") })
+    //    @ManyToMany(cascade = CascadeType.ALL)
+    //    @JoinTable(name = "commande",
+    //            joinColumns = { @JoinColumn(name = "email") },
+    //            inverseJoinColumns = { @JoinColumn(name = "code") })
     @OneToMany(mappedBy = "client")
     private Collection<Commande> commandes = new ArrayList<>();
-
 
     public Client() {
     }
 
-    public Client(String email, @NotNull String nom, @NotNull String prenom, @NotNull String password, @NotNull @Size(max = 5) Integer numAdresse, @NotNull String rueAdresse, @NotNull @Size(max = 5, min = 5) Integer cpAdresse, @NotNull @Size(min = 1, max = 50) String villeAdresse, @Size(max = 100) String compAdresse, @NotNull Date dateNaissance, @NotNull @Size(min = 10, max = 10) String tel, @NotNull Civilite civilite, Collection<Commande> commandes) {
+    public Client(String email, @NotNull String nom, @NotNull String prenom, @NotNull String password,
+            @NotNull @Size(max = 5) Integer numAdresse, @NotNull String rueAdresse,
+            @NotNull @Size(max = 5, min = 5) Integer cpAdresse, @NotNull @Size(min = 1, max = 50) String villeAdresse,
+            @Size(max = 100) String compAdresse, @NotNull Date dateNaissance,
+            @NotNull @Size(min = 10, max = 10) String tel, @NotNull Civilite civilite, Collection<Commande> commandes) {
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;

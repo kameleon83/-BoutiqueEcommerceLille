@@ -3,6 +3,7 @@ package com.formation.boutique.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,7 @@ public class Article {
     private String description;
     @Positive
     private Integer nbVentes;
-    @Positive
+    @PositiveOrZero
     @Size(min = 1, max = 2)
     private Integer promo;
 
@@ -28,6 +29,7 @@ public class Article {
     private Collection<Image> images;
 
     @ManyToOne
+    @NotNull
     private Categorie categorie;
 
 //    @ManyToMany(cascade = CascadeType.ALL)

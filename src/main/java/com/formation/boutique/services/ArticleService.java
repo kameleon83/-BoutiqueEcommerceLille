@@ -2,7 +2,7 @@ package com.formation.boutique.services;
 
 import com.formation.boutique.entities.Article;
 import com.formation.boutique.repositories.ArticleRepository;
-import com.formation.boutique.repositories.ArticleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +16,11 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
-    public Iterable<Article> getAll(){
+    public Iterable<Article> getAll() {
         return articleRepository.findAll();
     }
 
-    public Article save(Article Article){
+    public Article save(Article Article) {
         return articleRepository.save(Article);
     }
 

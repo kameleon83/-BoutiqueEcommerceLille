@@ -1,0 +1,42 @@
+<form th:action="@{/articles/create}" method="post" enctype="multipart/form-data" xmlns:th="http://www.thymeleaf.org">
+    <div class="form-group">
+        <label th:for="code" th:text="#{articles.code}"></label>
+        <input type="number" class="form-control" th:field="*{article.code}" th:placeholder="#{articles.code}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.code')}" th:errors="*{article.code}"></div>
+    </div>
+    <div class="form-group">
+        <label th:for="nom" th:text="#{articles.nom}"></label>
+        <input type="text" class="form-control" th:field="*{article.nom}"
+               th:placeholder="#{articles.nom}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.nom')}" th:errors="*{article.nom}"></div>
+    </div>
+    <div class="form-group">
+        <label th:for="prix" th:text="#{articles.prix}"></label>
+        <input type="number" th:step="0.01" class="form-control" th:field="*{article.prix}" th:placeholder="#{articles.prix}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.prix')}" th:errors="*{article.prix}"></div>
+    </div>
+    <div class="form-group">
+        <label th:for="description" th:text="#{articles.description}"></label>
+        <textarea class="form-control" th:field="*{article.description}" th:placeholder="#{articles.description}"
+                  rows="3"></textarea>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.description')}"
+             th:errors="*{article.description}"></div>
+    </div>
+    <div class="form-group">
+        <label th:for="promo" th:text="#{articles.promo}"></label>
+        <input type="number" class="form-control" th:field="*{article.promo}" th:placeholder="#{articles.promo}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.promo')}" th:errors="*{article.promo}"></div>
+    </div>
+    <div class="form-group">
+        <label th:for="image" th:text="#{articles.image}">Example file input</label>
+        <input type="file" class="form-control-file" name="uploadingFiles" accept="image/*" multiple>
+    </div>
+    <!--<input id="input-b1" name="input-b1" type="file" class="file" accept="image/*" multiple>-->
+    <div class="form-group">
+        <label th:for="categorie" th:text="#{articles.categorie}"></label>
+        <select th:field="*{article.categorie}" th:utext="${categories}" class="form-control"></select>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.categorie')}"
+             th:errors="*{article.categorie}"></div>
+    </div>
+    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+</form>

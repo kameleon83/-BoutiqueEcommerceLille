@@ -16,7 +16,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ArticleController {
@@ -33,29 +40,46 @@ public class ArticleController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping("/form")
-    public String getForm(ModelMap model) {
-        model.addAttribute("title", "Bonjour");
-        model.addAttribute("h1", "Hello world");
-        model.addAttribute("cat", new Categorie());
-        model.addAttribute("article", new Article());
-
-        return "pages/formulaire.html";
+    @GetMapping("/articles")
+    public ModelAndView home() {
+        return new ModelAndView("pages/home")
+                .addObject("articles", articleService.getAll())
+                .addObject("title", "articles.title")
+                .addObject("fragments", "fragments/articles/index");
     }
 
     @GetMapping("/articles/create")
     public ModelAndView getCreate() {
-        return new ModelAndView("pages/articles/form").addObject("article", new Article());
+        return new ModelAndView("pages/home")
+                .addObject("article", new Article())
+                .addObject("title", "articles.title")
+                .addObject("fragments", "fragments/articles/form")
+                .addObject("categories", categorieService.categorieListSelect());
     }
 
     @PostMapping("/articles/create")
     public String postCreate(@Valid @ModelAttribute Article article, BindingResult articleResult,
-            @Valid @ModelAttribute Categorie categorie, BindingResult categorieResult,
-            @Valid @ModelAttribute Image image, BindingResult imageResult, ModelMap model) {
-        if (articleResult.hasErrors() || categorieResult.hasErrors() || imageResult.hasErrors()) {
-            return "pages/articles/form";
+//                             @Valid @ModelAttribute List<Image> images, BindingResult imageResult,
+                             @RequestParam("uploadingFiles") MultipartFile[] uploadingFiles, RedirectAttributes redirectAttributes,
+                             ModelMap model) throws IOException {
+        if (articleResult.hasErrors()) {
+            model.addAttribute("title", "articles.title");
+            model.addAttribute("fragments", "fragments/articles/form");
+            model.addAttribute("categories", categorieService.categorieListSelect());
+            return "pages/home";
         }
-
+        articleService.save(article);
+        // Vérifier si il existe déjà
+        for (MultipartFile uploadedFile : uploadingFiles) {
+            if (ImageController.checkIfImage(uploadedFile.getOriginalFilename())) {
+                File file = new File(ImageController.UPLOAD_FOLDER + uploadedFile.getOriginalFilename());
+                uploadedFile.transferTo(file);
+                Image img = new Image();
+                img.setArticle(article);
+                img.setLien(uploadedFile.getOriginalFilename());
+                imageService.save(img);
+            }
+        }
         return "redirect:/articles";
     }
 }

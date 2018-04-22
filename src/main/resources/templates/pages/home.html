@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang=fr xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{${title}}"></title>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <!--header-->
+    <th:block th:replace="fragments/nav"></th:block>
+    <!--header-->
+    <!--<h1 th:if="${session.pseudo != null}" th:text="|Bienvenue ${session.pseudo}|"></h1>-->
+    <th:block th:replace="${fragments}"></th:block>
+    <!--footer-->
+    <th:block th:replace="fragments/footer"></th:block>
+    <!--footer-->
+</div>
+</body>
+</html>

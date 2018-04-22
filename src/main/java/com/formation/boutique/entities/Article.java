@@ -1,10 +1,7 @@
 package com.formation.boutique.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,16 +10,16 @@ public class Article {
     @Id
     private Long code;
     @NotNull
+    @NotBlank
     private String nom;
     @NotNull
     @Positive
     private Float prix;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Positive
+    @PositiveOrZero
     private Integer nbVentes;
     @PositiveOrZero
-    @Size(min = 1, max = 2)
     private Integer promo;
 
     @OneToMany(mappedBy = "article")

@@ -16,11 +16,12 @@ import java.io.IOException;
 public class ImageController {
 
     //destination folder to upload the files
-    private static String UPLOAD_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/img/";
+    public static String UPLOAD_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/img/";
 
     @RequestMapping("/images/create")
     public ModelAndView showUpload() {
-        return new ModelAndView("pages/images/form");
+        return new ModelAndView("pages/home")
+                .addObject("fragments", "fragments/images/form");
     }
 
     @RequestMapping(value = "/images/create", method = RequestMethod.POST)
@@ -43,7 +44,7 @@ public class ImageController {
         return "redirect:/images/create";
     }
 
-    private Boolean checkIfImage(String file) {
+    public static Boolean checkIfImage(String file) {
         File f = new File(file);
         String mimetype = new MimetypesFileTypeMap().getContentType(f);
         String type = mimetype.split("/")[0];

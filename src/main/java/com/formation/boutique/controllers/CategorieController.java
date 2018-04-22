@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class CategorieController {
@@ -29,14 +26,18 @@ public class CategorieController {
 
     @GetMapping("/categories")
     public ModelAndView getAll() {
-        return new ModelAndView("pages/categories/index")
+        return new ModelAndView("pages/home")
+                .addObject("fragments", "fragments/categories/index")
+                .addObject("title", "categories.title")
                 .addObject("str", String.join("", categorieService.categorieListTree()));
     }
 
     @GetMapping("/categories/create")
     public ModelAndView getForm() {
-        return new ModelAndView("pages/categories/form")
+        return new ModelAndView("pages/home")
                 .addObject("cat", new Categorie())
+                .addObject("title", "categories.title")
+                .addObject("fragments", "fragments/categories/form")
                 .addObject("categories", String.join("", categorieService.categorieListSelect()));
     }
 
@@ -44,11 +45,12 @@ public class CategorieController {
     public String postForm(@Valid @ModelAttribute(name = "cat") Categorie categorie, BindingResult bindingResult,
                            ModelMap model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("fragments", "fragments/categories/form");
+            model.addAttribute("title", "categories.title");
             model.addAttribute("categories", categorieService.getAll());
-            return "pages/categories/form";
+            return "pages/home";
         }
         categorieService.save(categorie);
-        System.out.println(categorie);
         return "redirect:/categories";
     }
 }

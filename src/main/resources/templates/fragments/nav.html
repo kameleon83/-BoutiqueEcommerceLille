@@ -1,0 +1,30 @@
+<nav xmlns:th="http://www.thymeleaf.org" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">E-Boutique</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{categories.title}"></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/categories}" th:text="#{categories.see}"></a>
+                    <a class="dropdown-item" th:href="@{/categories/create}" th:text="#{categories.create}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{articles.title}"></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/articles}" th:text="#{articles.see}"></a>
+                    <a class="dropdown-item" th:href="@{/articles/create}" th:text="#{articles.create}"></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+

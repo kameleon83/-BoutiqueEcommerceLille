@@ -1,0 +1,13 @@
+<form th:action="@{/categories/create}" th:object="${cat}" method="post" xmlns:th="http://www.thymeleaf.org">
+    <div class="form-group">
+        <label th:for="nom" th:text="#{categorie.nom}"></label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{nom}"
+               th:placeholder="#{categorie.nom}">
+        <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="parent" th:text="#{categorie.parent}"></label>
+        <select th:field="*{parent}" th:utext="${categories}" class="form-control"></select>
+    </div>
+    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+</form>

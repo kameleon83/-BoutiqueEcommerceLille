@@ -1,14 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<h1>Spring Boot - File Upload</h1>
-<div>
+<div xmlns:th="http://www.thymeleaf.org">
     <h3 th:text="|Status: ${message}|"></h3>
 </div>
 <form method="POST"  action="/images/create" enctype="multipart/form-data">
-    <input type="file" name="uploadingFiles" multiple/><br />
+    <input type="file" name="uploadingFiles" accept="image/*" multiple/><br />
     <br /> <input type="submit" value="Submit" />
 </form>
-
-</body>
-</html>

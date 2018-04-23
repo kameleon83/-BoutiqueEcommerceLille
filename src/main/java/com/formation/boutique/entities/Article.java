@@ -1,5 +1,8 @@
 package com.formation.boutique.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -121,5 +124,19 @@ public class Article {
 
     public void setCommandes(Collection<Commande> commandes) {
         this.commandes = commandes;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                ", nom='" + nom + '\'' +
+                ", prix=" + prix +
+                ", description='" + description + '\'' +
+                ", nbVentes=" + nbVentes +
+                ", promo=" + promo +
+                ", images=" + images +
+                ", categorie=" + categorie +
+                ", commandes=" + commandes +
+                '}';
     }
 }

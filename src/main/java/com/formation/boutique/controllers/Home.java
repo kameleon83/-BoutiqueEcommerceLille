@@ -9,7 +9,7 @@ public class Home {
 
     @GetMapping("/")
     public ModelAndView home(){
-        return new ModelAndView("/pages/home");
+        return new ModelAndView("/pages/accueil");
     }
 
 }

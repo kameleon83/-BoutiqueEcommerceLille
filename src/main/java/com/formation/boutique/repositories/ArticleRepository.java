@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArticleRepository extends CrudRepository<Article, Long> {
+    Article findArticleBycode(Long code);
 }

@@ -1,0 +1,11 @@
+<div class="media" xmlns:th="http://www.thymeleaf.org">
+    <img class="align-self-start mr-3" th:each="image : ${article.images}" th:src="${image.lien}"
+         th:alt="${article.nom}" style="width: 200px;">
+    <div class="media-body">
+        <h5 class="mt-0" th:text="${article.nom}"></h5>
+        <span th:text="|Prix : ${article.prix} €|"></span>
+        <p th:if="${article.nbVentes > 0}" th:text="|Nombres de ventes : ${article.nbVentes}|"></p>
+        <p th:if="${article.promo > 0}" th:text="|Promotion sur l'article : ${article.promo} %|"></p>
+        <p th:text="${article.description}"></p>
+    </div>
+</div>

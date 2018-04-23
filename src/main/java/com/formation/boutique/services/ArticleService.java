@@ -24,4 +24,11 @@ public class ArticleService {
         return articleRepository.save(Article);
     }
 
+    public Boolean findArticleBycodeBool(Long code){
+        return articleRepository.findArticleBycode(code) != null;
+    }
+    public Article findArticleBycode(Long code){
+        return articleRepository.findArticleBycode(code);
+    }
+
 }

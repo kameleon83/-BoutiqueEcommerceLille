@@ -28,7 +28,7 @@ public class ImageController {
     public String uploadingPost(@RequestParam("uploadingFiles") MultipartFile[] uploadingFiles, RedirectAttributes redirectAttributes) throws IOException {
         for (MultipartFile uploadedFile : uploadingFiles) {
             if (uploadedFile.getOriginalFilename().isEmpty()) {
-                redirectAttributes.addFlashAttribute("message", "Il n'y a aucuns fichiers!");
+                redirectAttributes.addFlashAttribute("message", "Il n'y a aucun fichier!");
                 return "redirect:/images/create";
             }
             if (checkIfImage(uploadedFile.getOriginalFilename())) {
@@ -40,7 +40,7 @@ public class ImageController {
             }
         }
 
-        redirectAttributes.addFlashAttribute("message", "Les images sont bien enregistrés ;-)");
+        redirectAttributes.addFlashAttribute("message", "Les images sont bien enregistrées ;-)");
         return "redirect:/images/create";
     }
 
@@ -50,4 +50,6 @@ public class ImageController {
         String type = mimetype.split("/")[0];
         return type.equals("image");
     }
+
+
 }

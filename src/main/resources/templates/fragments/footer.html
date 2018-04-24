@@ -5,5 +5,9 @@
 <script>
     $( document ).ready(function() {
         $("#promo").val(0);
+
+        // Catégorie update
+        var catId = $(".cat-label").data("id");
+        $(".cat-select").find("[data-id=" + catId + "]").prop('selected', true)
     });
 </script>

@@ -9,7 +9,7 @@ import java.util.Collection;
 @Entity
 public class Categorie {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

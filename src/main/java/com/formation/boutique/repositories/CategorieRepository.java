@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 public interface CategorieRepository extends CrudRepository<Categorie, Long> {
 
     Collection<Categorie> findByNom(String nom);
+    Categorie findCategorieById(Long id);
 
     Collection<Categorie> findAllByOrderByArticlesAsc();
     Collection<Categorie> findByParentIsNull();

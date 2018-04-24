@@ -11,6 +11,7 @@ import java.util.Collection;
 @Entity
 public class Article {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
     @NotNull
     @NotBlank

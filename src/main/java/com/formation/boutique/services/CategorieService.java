@@ -34,12 +34,16 @@ public class CategorieService {
     public List<String> categorieListTree() {
         Collection<Categorie> cats = this.getAll();
         List<String> str = new ArrayList<>();
-        str.add("<ul>");
         for (Categorie c : cats) {
-            str.add("<li>" + c.getNom() + "</li>");
+            str.add("<div class='col-md-6'><ul class='list-group d-block p-1'>");
+            str.add("<li class='list-group-item d-flex justify-content-between align-items-center list-group-item-dark'>" +
+                    c.getNom() +
+                    "<div><a class='cat-img' href='/categories/update/" + c.getId() + "' data-toggle='tooltip' data-placement='top' title='Update'><img src='/img/site/update.png' alt='update'></a>" +
+                    "<a href='/categories/delete/" + c.getId() + "' data-toggle='tooltip' data-placement='top' title='Delete'><img src='/img/site/trash.png' alt='delete'></a></div>" +
+                    "</li>");
             this.subCat(c, "<ul>", str);
+            str.add("</ul></div>");
         }
-        str.add("</ul>");
         return str;
     }
 
@@ -48,7 +52,11 @@ public class CategorieService {
         if (cats.size() > 0) {
             categories.add(submark);
             for (Categorie c : cats) {
-                categories.add("<li>" + c.getNom() + "</li>");
+                categories.add("<li class='list-group-item d-flex justify-content-between align-items-center'>" +
+                        c.getNom() +
+                        "<div><a class='cat-img' href='/categories/update/" + c.getId() + "' data-toggle='tooltip' data-placement='top' title='Update'><img src='/img/site/update.png' alt='update'></a>" +
+                        "<a href='/categories/delete/" + c.getId() + "' data-toggle='tooltip' data-placement='top' title='Delete'><img src='/img/site/trash.png' alt='delete'></a></div>" +
+                        "</li>");
                 subCat(c, submark, categories);
             }
             categories.add("</ul>");
@@ -60,7 +68,8 @@ public class CategorieService {
         List<String> str = new ArrayList<>();
         for (Categorie c : cats) {
 //            if (!ifexist(str, c.getNom())){
-            str.add("<option value='" + c.getId() + "'>" + c.getNom() + "</option>");
+            str.add("<option value=''>---</option>");
+            str.add("<option value='" + c.getId() + "' data-id='" + c.getId() + "'>" + c.getNom() + "</option>");
             this.subCatSelect(c, "", str);
 //            }
         }
@@ -72,10 +81,18 @@ public class CategorieService {
         if (cats.size() > 0) {
             submark += "&emsp;";
             for (Categorie c : cats) {
-                categories.add("<option value='" + c.getId() + "'>" + submark + c.getNom() + "</option>");
+                categories.add("<option value='" + c.getId() + "' data-id='" + c.getId() + "'>" + submark + c.getNom() + "</option>");
                 subCatSelect(c, submark, categories);
             }
         }
+    }
+
+    public Categorie getOne(Long id) {
+        return categorieRepository.findCategorieById(id);
+    }
+
+    public void delete(Categorie categorie) {
+        categorieRepository.delete(categorie);
     }
 
 }

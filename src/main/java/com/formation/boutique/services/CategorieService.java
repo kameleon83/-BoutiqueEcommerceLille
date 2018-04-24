@@ -23,7 +23,7 @@ public class CategorieService {
     }
 
     public Collection<Categorie> getAll() {
-        return (Collection<Categorie>) categorieRepository.findAll();
+        return categorieRepository.findByParentIsNull();
     }
 
     public Categorie save(Categorie categorie) {

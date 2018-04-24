@@ -42,6 +42,7 @@ public class ArticleController {
                 .addObject("title", "articles.title")
                 .addObject("fragments", "fragments/articles/index");
     }
+
     @GetMapping("/articles/{code}")
     public ModelAndView getArticle(@PathVariable Long code) {
         return new ModelAndView("pages/home")
@@ -77,7 +78,6 @@ public class ArticleController {
             return "pages/home";
         }
 
-        //TODO Vérifier les images size
         articleService.save(article);
         if (createFolder(UPLOAD_FOLDER + article.getCode().toString())) {
             saveImagesInFolderServer(uploadImages, article, article.getCode().toString());

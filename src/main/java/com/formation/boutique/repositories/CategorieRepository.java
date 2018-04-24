@@ -18,6 +18,7 @@ public interface CategorieRepository extends CrudRepository<Categorie, Long> {
     Collection<Categorie> findByNom(String nom);
 
     Collection<Categorie> findAllByOrderByArticlesAsc();
+    Collection<Categorie> findByParentIsNull();
 
     Collection<Categorie> findCategoriesByParentOrderByNom(Categorie categorie);
 }

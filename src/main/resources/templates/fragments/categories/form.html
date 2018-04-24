@@ -4,7 +4,8 @@
         <label th:for="nom" th:text="#{categorie.nom}"></label>
         <input type="text" class="form-control cat-label" aria-describedby="emailHelp" th:field="*{nom}"
                th:placeholder="#{categorie.nom}"  th:data-id="*{parent} != null? *{parent.id} : ''" tabindex="1">
-        <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+        <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
+
     </div>
     <div class="form-group">
         <label th:for="parent" th:text="#{categorie.parent}"></label>

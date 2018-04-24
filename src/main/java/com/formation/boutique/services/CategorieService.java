@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 @Service
 public class CategorieService {
@@ -39,10 +36,8 @@ public class CategorieService {
         List<String> str = new ArrayList<>();
         str.add("<ul>");
         for (Categorie c : cats) {
-            if (!ifexist(str, c.getNom())) {
-                str.add("<li>" + c.getNom() + "</li>");
-                this.subCat(c, "<ul>", str);
-            }
+            str.add("<li>" + c.getNom() + "</li>");
+            this.subCat(c, "<ul>", str);
         }
         str.add("</ul>");
         return str;
@@ -64,21 +59,12 @@ public class CategorieService {
         Collection<Categorie> cats = this.getAll();
         List<String> str = new ArrayList<>();
         for (Categorie c : cats) {
-            if (!ifexist(str, c.getNom())){
-                str.add("<option value='" + c.getId() + "'>" + c.getNom() + "</option>");
-                this.subCatSelect(c, "", str);
-            }
+//            if (!ifexist(str, c.getNom())){
+            str.add("<option value='" + c.getId() + "'>" + c.getNom() + "</option>");
+            this.subCatSelect(c, "", str);
+//            }
         }
         return str;
-    }
-
-    private Boolean ifexist(List<String> list, String name){
-        for (String str:list) {
-            if (Pattern.compile(name).matcher(str).find()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void subCatSelect(Categorie categorie, String submark, List<String> categories) {

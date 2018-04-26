@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImageRepository extends CrudRepository<Image, Long> {
+    Image findImageById(Long id);
 }

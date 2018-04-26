@@ -20,6 +20,6 @@ public interface CategorieRepository extends CrudRepository<Categorie, Long> {
 
     Collection<Categorie> findAllByOrderByArticlesAsc();
     Collection<Categorie> findByParentIsNull();
-
+    void deleteCategorieById(Long id);
     Collection<Categorie> findCategoriesByParentOrderByNom(Categorie categorie);
 }

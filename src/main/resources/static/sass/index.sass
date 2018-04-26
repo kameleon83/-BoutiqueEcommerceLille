@@ -3,3 +3,30 @@ body
 
 .cat-img
     padding: 0 8px
+
+.article-code-hidden
+    opacity: .5
+    pointer-events: none
+
+.articles-div-update
+    position: relative
+    text-align: center
+    .article-update-image
+        display: inline-block
+        width: 100px
+        height: auto
+        background-color: rgba(0,0,0,0.3)
+        img
+            position: relative
+            max-width: 100px
+            height: auto
+            z-index: -1
+    .articles-images-update
+        position: absolute
+        left: 0
+        right: 0
+        top: 50%
+        transform: translateY(-50%)
+        a
+            img
+                filter: invert(100%)

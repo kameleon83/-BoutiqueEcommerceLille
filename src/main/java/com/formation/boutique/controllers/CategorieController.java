@@ -3,7 +3,6 @@ package com.formation.boutique.controllers;
 import com.formation.boutique.entities.Categorie;
 import com.formation.boutique.services.CategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,19 +49,17 @@ public class CategorieController {
             model.addAllAttributes(addModelForm("fragments/categories/form","create", "post"));
             return "pages/home";
         }
-        categorieService.save(categorie);
         attributes.addFlashAttribute("message", "L'enregistrement s'est bien passé");
         return "redirect:/categories/create";
     }
 
     @GetMapping("/categories/update/{code}")
     public ModelAndView updateForm(@PathVariable Long code) {
-                Categorie cat = categorieService.getOne(code);
         return new ModelAndView("pages/home")
-                .addObject("cat", cat)
-                .addAllObjects(addModelForm("fragments/categories/form", "update", "put"))
-                .addObject("categories", String.join("", categorieService.categorieListSelect()));
+                .addObject("cat", categorieService.getOne(code))
+                .addAllObjects(addModelForm("fragments/categories/form", "update", "put"));
     }
+
     @PutMapping("/categories/update")
     public String putForm(@Valid @ModelAttribute(name = "cat") Categorie categorie, BindingResult bindingResult,
                           ModelMap model) {

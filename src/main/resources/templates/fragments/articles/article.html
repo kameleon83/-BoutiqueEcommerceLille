@@ -8,4 +8,12 @@
         <p th:if="${article.promo > 0}" th:text="|Promotion sur l'article : ${article.promo} %|"></p>
         <p th:text="${article.description}"></p>
     </div>
+    <div>
+        <a class="cat-img" th:href="|@{/articles/update/}${article.code}|" data-toggle="tooltip" data-placement="top" title="Update">
+            <img th:src="@{/img/site/update.png}" alt="update">
+        </a>
+        <a th:href="|@{/articles/delete/}${article.code}|" data-toggle="tooltip" data-placement="top" title="Delete">
+            <img th:src="@{/img/site/trash.png}" alt="delete">
+        </a>
+    </div>
 </div>

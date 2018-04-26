@@ -20,7 +20,7 @@ public class Categorie {
     @OneToOne
     private Categorie parent;
 
-    @OneToMany(mappedBy = "categorie")
+    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
     private Collection<Article> articles = new ArrayList<>();
 
     public Categorie() {

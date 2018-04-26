@@ -23,4 +23,11 @@ public class ImageService {
         return imageRepository.save(Image);
     }
 
+    public Image getOne(Long id){
+        return imageRepository.findImageById(id);
+    }
+
+    public void delete(Long id) {
+        imageRepository.delete(getOne(id));
+    }
 }

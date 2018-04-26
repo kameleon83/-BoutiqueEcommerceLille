@@ -30,5 +30,8 @@ public class ArticleService {
     public Article findArticleBycode(Long code){
         return articleRepository.findArticleBycode(code);
     }
+    public void delete(Long code){
+        articleRepository.delete(findArticleBycode(code));
+    }
 
 }

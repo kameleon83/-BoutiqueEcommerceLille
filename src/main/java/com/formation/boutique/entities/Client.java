@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import com.formation.boutique.enumerations.Civilite;
 
+import com.formation.boutique.enumerations.Droit;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -45,7 +46,7 @@ public class Client {
     @Size(max = 100)
     private String compAdresse;
     @NotNull
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateNaissance;
     @NotNull
     @Column(length = 10)
@@ -54,6 +55,10 @@ public class Client {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Civilite civilite;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Droit droit;
 
     //    @ManyToMany(cascade = CascadeType.ALL)
     //    @JoinTable(name = "commande",
@@ -187,5 +192,13 @@ public class Client {
 
     public void setCommandes(Collection<Commande> commandes) {
         this.commandes = commandes;
+    }
+
+    public Droit getDroit() {
+        return droit;
+    }
+
+    public void setDroit(Droit droit) {
+        this.droit = droit;
     }
 }

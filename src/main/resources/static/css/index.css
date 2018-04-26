@@ -4,4 +4,30 @@ body {
 .cat-img {
   padding: 0 8px; }
 
+.article-code-hidden {
+  opacity: 0.5;
+  pointer-events: none; }
+
+.articles-div-update {
+  position: relative;
+  text-align: center; }
+  .articles-div-update .article-update-image {
+    display: inline-block;
+    width: 100px;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.3); }
+    .articles-div-update .article-update-image img {
+      position: relative;
+      max-width: 100px;
+      height: auto;
+      z-index: -1; }
+  .articles-div-update .articles-images-update {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%); }
+    .articles-div-update .articles-images-update a img {
+      filter: invert(100%); }
+
 /*# sourceMappingURL=index.css.map */

@@ -11,7 +11,6 @@ import java.util.Collection;
 @Entity
 public class Article {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
     @NotNull
     @NotBlank
@@ -26,7 +25,7 @@ public class Article {
     @PositiveOrZero
     private Integer promo;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private Collection<Image> images;
 
     @ManyToOne

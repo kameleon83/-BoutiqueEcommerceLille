@@ -1,5 +1,7 @@
-<form th:action="@{/categories/} + ${action}" th:object="${cat}" th:method="${method}" xmlns:th="http://www.thymeleaf.org">
-    <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
+<form th:action="@{/categories/} + ${action}" th:object="${cat}" th:method="${method}" xmlns:th="http://www.thymeleaf.org"
+      th:if="${session.client != null
+                and session.client.droit != T(com.formation.boutique.enumerations.Droit).RULE_USER}"
+>
     <div class="form-group">
         <label th:for="nom" th:text="#{categorie.nom}"></label>
         <input type="text" class="form-control cat-label" aria-describedby="emailHelp" th:field="*{nom}"

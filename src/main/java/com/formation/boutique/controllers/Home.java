@@ -9,7 +9,9 @@ public class Home {
 
     @GetMapping("/")
     public ModelAndView home(){
-        return new ModelAndView("/pages/accueil");
+        return new ModelAndView("/pages/home")
+                .addObject("fragments", "/fragments/index")
+                .addObject("title", "Home");
     }
 
 }

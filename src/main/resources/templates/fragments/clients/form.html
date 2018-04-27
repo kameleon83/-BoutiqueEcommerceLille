@@ -1,0 +1,116 @@
+<form th:action="|@{/clients/}${action}|" th:method="${method}" xmlns:th="http://www.thymeleaf.org" class="row">
+    <div class="form-group col-md-6">
+        <label th:for="email" th:text="#{client.email}"></label>
+        <input th:type="email" th:readonly="${action} == 'update' ? 'true' : 'false'" class="form-control"
+               th:field="*{client.email}"
+               th:placeholder="#{client.email}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.email')}"
+             th:errors="*{client.email}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="civilite" th:text="#{client.civilite}"></label>
+        <select class="custom-select" th:field="*{client.civilite}">
+            <option th:value="${civ}" th:text="#{${civ}}" th:each="civ : ${civilite}">One</option>
+        </select>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.civilite')}"
+             th:errors="*{client.civilite}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="nom" th:text="#{client.nom}"></label>
+        <input type="text" class="form-control" th:field="*{client.nom}"
+               th:placeholder="#{client.nom}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.nom')}"
+             th:errors="*{client.nom}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="prenom" th:text="#{client.prenom}"></label>
+        <input type="text" class="form-control" th:field="*{client.prenom}"
+               th:placeholder="#{client.prenom}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.prenom')}"
+             th:errors="*{client.prenom}"></div>
+    </div>
+    <div class="form-check form-group col-md-12">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="changePassword">
+            Souhaitez vous modifier votre mot de passe?
+        </label>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="password" th:text="#{client.password}"></label>
+        <input type="password" class="form-control" th:field="${client.password}" th:placeholder="#{client.password}" th:required="${action} == 'update' ? 'false' : 'true'">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.password')}"
+             th:errors="*{client.password}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="passwordVerif" th:text="#{client.passwordVerif}"></label>
+        <input type="password" class="form-control" th:field="*{client.passwordVerif}"
+               th:placeholder="#{client.passwordVerif}" th:required="${action} == 'update' ? 'false' : 'true'">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.passwordVerif')}"
+             th:errors="*{client.passwordVerif}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="numAdresse" th:text="#{client.numAdresse}"></label>
+        <input type="number" class="form-control" th:field="*{client.numAdresse}"
+               th:placeholder="#{client.numAdresse}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.numAdresse')}"
+             th:errors="*{client.numAdresse}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="rueAdresse" th:text="#{client.rueAdresse}"></label>
+        <input type="text" class="form-control" th:field="*{client.rueAdresse}"
+               th:placeholder="#{client.rueAdresse}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.rueAdresse')}"
+             th:errors="*{client.rueAdresse}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="cpAdresse" th:text="#{client.cpAdresse}"></label>
+        <input type="number" class="form-control" th:field="*{client.cpAdresse}"
+               th:placeholder="#{client.cpAdresse}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.cpAdresse')}"
+             th:errors="*{client.cpAdresse}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="villeAdresse" th:text="#{client.villeAdresse}"></label>
+        <input type="text" class="form-control" th:field="*{client.villeAdresse}"
+               th:placeholder="#{client.villeAdresse}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.villeAdresse')}"
+             th:errors="*{client.villeAdresse}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="compAdresse" th:text="#{client.compAdresse}"></label>
+        <input type="text" class="form-control" th:field="*{client.compAdresse}"
+               th:placeholder="#{client.compAdresse}">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.compAdresse')}"
+             th:errors="*{client.compAdresse}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="dateNaissance" th:text="#{client.dateNaissance}"></label>
+        <input type="date" class="form-control" th:field="*{client.dateNaissance}"
+               th:placeholder="#{client.dateNaissance}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.dateNaissance')}"
+             th:errors="*{client.dateNaissance}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="tel" th:text="#{client.tel}"></label>
+        <input type="text" class="form-control" th:field="*{client.tel}"
+               th:placeholder="#{client.tel}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.tel')}"
+             th:errors="*{client.tel}"></div>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label th:for="droit" th:text="#{client.droit}"></label>
+        <select class="custom-select" th:field="*{client.droit}">
+                <option th:value="${d}" th:text="#{${d}}"
+                        th:each="d : ${droit}"
+                        th:if="${countUser == false and d == T(com.formation.boutique.enumerations.Droit).RULE_ADMIN }" ></option>
+            <option th:value="${d}" th:text="#{${d}}"
+                    th:each="d : ${droit}"
+                    th:if="${countUser == true and d != T(com.formation.boutique.enumerations.Droit).RULE_ADMIN }" ></option>
+        </select>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.droit')}"
+             th:errors="*{client.droit}"></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+</form>

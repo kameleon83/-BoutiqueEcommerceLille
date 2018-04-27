@@ -8,9 +8,11 @@
 <div class="container-fluid">
     <!--header-->
     <th:block th:replace="fragments/nav"></th:block>
+    <th:block th:if="${message}">
+        <div class="alert alert-success" role="alert" th:text="${message}"></div>
+    </th:block>
     <!--header-->
-    <!--<h1 th:if="${session.pseudo != null}" th:text="|Bienvenue ${session.pseudo}|"></h1>-->
-    <th:block th:replace="${fragments}"></th:block>
+    <th:block th:if="${fragments}" th:replace="${fragments}"></th:block>
     <!--footer-->
     <th:block th:replace="fragments/footer"></th:block>
     <!--footer-->

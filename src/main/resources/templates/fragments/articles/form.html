@@ -1,6 +1,5 @@
 <form th:action="|@{/articles/}${action}|" th:method="${method}" enctype="multipart/form-data"
       xmlns:th="http://www.thymeleaf.org">
-    <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
     <div th:class="|'form-group' ${action} == 'update' ? 'article-code-hidden' : ''|">
         <label th:for="code" th:text="#{articles.code}"></label>
         <input th:type="number" th:readonly="${action} == 'update' ? 'true' : 'false'" class="form-control" th:field="*{article.code}"

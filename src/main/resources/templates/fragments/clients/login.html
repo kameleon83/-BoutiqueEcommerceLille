@@ -1,0 +1,19 @@
+<form th:action="|@{/clients/}${action}|" th:method="${method}" xmlns:th="http://www.thymeleaf.org" class="row">
+    <div class="form-group col-md-6">
+        <label th:for="email" th:text="#{login.email}"></label>
+        <input th:type="email" class="form-control"
+               th:field="*{login.email}"
+               th:placeholder="#{login.email}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('login.email')}"
+             th:errors="*{login.email}"></div>
+    </div>
+    <div class="form-group col-md-6">
+        <label th:for="password" th:text="#{login.password}"></label>
+        <input th:type="password" class="form-control"
+               th:field="*{login.password}"
+               th:placeholder="#{login.password}" required>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('login.password')}"
+             th:errors="*{login.password}"></div>
+    </div>
+    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+</form>

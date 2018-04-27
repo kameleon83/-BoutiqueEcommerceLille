@@ -1,6 +1,8 @@
-<nav xmlns:th="http://www.thymeleaf.org" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+<nav xmlns:th="http://www.thymeleaf.org" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"
+     th:fragment="nav">
     <a class="navbar-brand" href="#">E-Boutique</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -9,25 +11,54 @@
                 <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
             </li>
 
+            <th:block th:if="${session.client} != null">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false" th:text="#{categories.title}"></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{/categories}" th:text="#{categories.see}"></a>
+                        <th:block th:if="${session.client != null
+                                    and session.client.droit != T(com.formation.boutique.enumerations.Droit).RULE_USER}">
+                            <a class="dropdown-item" th:href="@{/categories/create}" th:text="#{categories.create}"></a>
+                        </th:block>
+                    </div>
+                </li>
+            </th:block>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{categories.title}"></a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/categories}" th:text="#{categories.see}"></a>
-                    <a class="dropdown-item" th:href="@{/categories/create}" th:text="#{categories.create}"></a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{articles.title}"></a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false" th:text="#{articles.title}"></a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" th:href="@{/articles}" th:text="#{articles.see}"></a>
-                    <a class="dropdown-item" th:href="@{/articles/create}" th:text="#{articles.create}"></a>
+                    <th:block th:if="${session.client != null
+                and session.client.droit != T(com.formation.boutique.enumerations.Droit).RULE_USER}">
+                        <a class="dropdown-item" th:href="@{/articles/create}" th:text="#{articles.create}"></a>
+                    </th:block>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{clients.title}"></a>
+            <li class="nav-item dropdown" th:if="${session.client != null
+                and session.client.droit == T(com.formation.boutique.enumerations.Droit).RULE_ADMIN}">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false" th:text="#{clients.title}"></a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" th:href="@{/clients}" th:text="#{clients.see}"></a>
                     <a class="dropdown-item" th:href="@{/clients/create}" th:text="#{clients.create}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#" role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false"
+                   th:text="${session.client} == null ? 'Compte' : ${session.client.nom}"></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:if="${session.client} == null" th:href="@{/clients/login}"
+                       th:text="#{login}"></a>
+                    <a class="dropdown-item" th:if="${session.client} != null" th:href="@{/clients/logout}"
+                       th:text="#{logout}"></a>
+                    <a class="dropdown-item" th:if="${session.client} == null" th:href="@{/clients/create}"
+                       th:text="#{register}"></a>
                 </div>
             </li>
         </ul>

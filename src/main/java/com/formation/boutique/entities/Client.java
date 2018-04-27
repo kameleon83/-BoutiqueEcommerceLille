@@ -1,22 +1,21 @@
 package com.formation.boutique.entities;
 
+import com.formation.boutique.enumerations.Civilite;
+import com.formation.boutique.enumerations.Droit;
+import com.formation.boutique.services.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.formation.boutique.enumerations.Civilite;
-
-import com.formation.boutique.enumerations.Droit;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Client {
@@ -29,14 +28,16 @@ public class Client {
     @NotNull
     private String prenom;
     @NotNull
+    @NotBlank
+//    @Column(updatable = false)
     private String password;
+    @Transient
+    private String passwordVerif;
     @NotNull
-    @Size(max = 5)
     private Integer numAdresse;
     @NotNull
     private String rueAdresse;
     @NotNull
-    @Size(max = 5, min = 5)
     private Integer cpAdresse;
     @NotNull
     @Column(length = 50)
@@ -47,6 +48,7 @@ public class Client {
     private String compAdresse;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "DATE")
     private Date dateNaissance;
     @NotNull
     @Column(length = 10)
@@ -67,18 +69,19 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private Collection<Commande> commandes = new ArrayList<>();
 
+    @Transient
+    private String changePassword;
+
+
     public Client() {
     }
 
-    public Client(String email, @NotNull String nom, @NotNull String prenom, @NotNull String password,
-            @NotNull @Size(max = 5) Integer numAdresse, @NotNull String rueAdresse,
-            @NotNull @Size(max = 5, min = 5) Integer cpAdresse, @NotNull @Size(min = 1, max = 50) String villeAdresse,
-            @Size(max = 100) String compAdresse, @NotNull Date dateNaissance,
-            @NotNull @Size(min = 10, max = 10) String tel, @NotNull Civilite civilite, Collection<Commande> commandes) {
+    public Client(String email, @NotNull String nom, @NotNull String prenom, @NotNull String password, String passwordVerif, @NotNull @Size(max = 5) Integer numAdresse, @NotNull String rueAdresse, @NotNull @Size(max = 5, min = 5) Integer cpAdresse, @NotNull @Size(min = 1, max = 50) String villeAdresse, @Size(max = 100) String compAdresse, @NotNull Date dateNaissance, @NotNull @Size(min = 10, max = 10) String tel, @NotNull Civilite civilite, @NotNull Droit droit, Collection<Commande> commandes) {
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
+        this.passwordVerif = passwordVerif;
         this.numAdresse = numAdresse;
         this.rueAdresse = rueAdresse;
         this.cpAdresse = cpAdresse;
@@ -87,6 +90,7 @@ public class Client {
         this.dateNaissance = dateNaissance;
         this.tel = tel;
         this.civilite = civilite;
+        this.droit = droit;
         this.commandes = commandes;
     }
 
@@ -119,7 +123,24 @@ public class Client {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password == null) {
+            this.password = this.changePassword;
+        } else {
+            this.password = get_SHA_512_SecurePassword(password);
+
+        }
+    }
+
+    public String getPasswordVerif() {
+        return passwordVerif;
+    }
+
+    public void setPasswordVerif(String passwordVerif) {
+        if (passwordVerif == null) {
+            this.passwordVerif = this.changePassword;
+        } else {
+            this.passwordVerif = get_SHA_512_SecurePassword(passwordVerif);
+        }
     }
 
     public Integer getNumAdresse() {
@@ -200,5 +221,52 @@ public class Client {
 
     public void setDroit(Droit droit) {
         this.droit = droit;
+    }
+
+    public String getChangePassword() {
+        return changePassword;
+    }
+
+    public void setChangePassword(String changePassword) {
+        this.changePassword = changePassword;
+    }
+
+    public static String get_SHA_512_SecurePassword(String passwordToHash) {
+        String generatedPassword = null;
+        String salt = "olprog";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "email='" + email + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordVerif='" + passwordVerif + '\'' +
+                ", numAdresse=" + numAdresse +
+                ", rueAdresse='" + rueAdresse + '\'' +
+                ", cpAdresse=" + cpAdresse +
+                ", villeAdresse='" + villeAdresse + '\'' +
+                ", compAdresse='" + compAdresse + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", tel='" + tel + '\'' +
+                ", civilite=" + civilite +
+                ", droit=" + droit +
+                ", commandes=" + commandes +
+                '}';
     }
 }

@@ -1,18 +1,38 @@
-<div class="card-group">
-    <div class="card" style="width: 18rem;" xmlns:th="http://www.thymeleaf.org" th:each="article : ${articles}">
-        <img class="card-img-top rounded mx-auto d-block" th:if="${not #lists.isEmpty(article.images)}"
-             th:src="@{${article.images[0].lien}}" th:alt="${article.nom}">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${article.nom}"></h5>
-            <div class="row">
-                <div class="col-12 text-truncate" th:text="${article.description}">
-                </div>
-            </div>
-            <!--<p class=" card-text" th:text="${article.description}"></p>-->
-            <a th:href="@{${'/articles/'+article.code}}" class="btn btn-primary" th:text="#{button.more.detail}"></a>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-    </div>
-</div>
+<table class="table table-striped" xmlns:th="http://www.thymeleaf.org"
+       th:if="${session.client != null
+                and session.client.droit == T(com.formation.boutique.enumerations.Droit).RULE_ADMIN}"
+>
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{clients.email}"></th>
+        <th scope="col" th:text="#{clients.civilite}"></th>
+        <th scope="col" th:text="#{clients.nom}"></th>
+        <th scope="col" th:text="#{clients.prenom}"></th>
+        <th scope="col" th:text="#{clients.cpAdresse}"></th>
+        <th scope="col" th:text="#{clients.villeAdresse}"></th>
+        <th scope="col" th:text="#{clients.dateNaissance}"></th>
+        <th scope="col" th:text="#{clients.droit}"></th>
+        <th scope="col">Option</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  th:each="client : ${clients}">
+        <th scope="row" th:text="${client.email}"></th>
+        <td th:text="${client.civilite}"></td>
+        <td th:text="${client.nom}"></td>
+        <td th:text="${client.prenom}"></td>
+        <td th:text="${client.cpAdresse}"></td>
+        <td th:text="${client.villeAdresse}"></td>
+        <td th:text="${#dates.format(client.dateNaissance, 'dd-MM-yyyy')}"></td>
+        <td th:text="${client.droit}"></td>
+        <td>
+            <a class="cat-img" th:href="|@{/clients/update/}${client.email}|" data-toggle="tooltip" data-placement="top" title="Update">
+                <img th:src="@{/img/site/update.png}" alt="update">
+            </a>
+            <a th:href="|@{/clients/delete/}${client.email}|" data-toggle="tooltip" data-placement="top" title="Delete">
+                <img th:src="@{/img/site/trash.png}" alt="delete">
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>

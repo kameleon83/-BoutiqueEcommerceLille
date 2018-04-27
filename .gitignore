@@ -15,6 +15,8 @@
 *.iws
 *.iml
 *.ipr
+/src/main/resources/static/img/*
+!/src/main/resources/static/img/site/*
 
 ### NetBeans ###
 /nbproject/private/
@@ -23,3 +25,5 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+Supprimerait src/main/resources/static/img/1/
+Supprimerait src/main/resources/static/img/1651/

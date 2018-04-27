@@ -2,7 +2,8 @@
       xmlns:th="http://www.thymeleaf.org">
     <div th:class="|'form-group' ${action} == 'update' ? 'article-code-hidden' : ''|">
         <label th:for="code" th:text="#{articles.code}"></label>
-        <input th:type="number" th:readonly="${action} == 'update' ? 'true' : 'false'" class="form-control" th:field="*{article.code}"
+        <input th:type="number" th:readonly="${action} == 'update' ? 'true' : 'false'" class="form-control"
+               th:field="*{article.code}"
                th:placeholder="#{articles.code}">
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.code')}"
              th:errors="*{article.code}"></div>
@@ -51,7 +52,8 @@
     </div>
     <div class="form-group">
         <label th:for="image" th:text="#{articles.image}">Example file input</label>
-        <input type="file" class="form-control-file" name="uploadImages" accept="image/*" multiple th:required="${action} == 'update' ? 'false' : 'true' ">
+        <input type="file" class="form-control-file" name="uploadImages" accept="image/*" multiple
+               th:required="${action} == 'update' ? 'false' : 'true' ">
         <div class="alert alert-danger" role="alert" th:if="${errorFile}" th:text="${errorFile}"></div>
     </div>
     <div class="form-group">
@@ -59,7 +61,10 @@
         <select th:field="*{article.categorie}" th:utext="${categories}" class="form-control cat-select"></select>
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('article.categorie')}"
              th:errors="*{article.categorie}"></div>
-        <input type="hidden" name="" class="cat-label" th:data-id="*{article.categorie} != null? *{article.categorie.id} : ''">
+        <input type="hidden" name="" class="cat-label"
+               th:data-id="*{article.categorie} != null? *{article.categorie.id} : ''">
     </div>
-    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+    </div>
 </form>

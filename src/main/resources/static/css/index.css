@@ -8,6 +8,9 @@ body {
   opacity: 0.5;
   pointer-events: none; }
 
+.form-check {
+  margin-left: 15px; }
+
 .articles-div-update {
   position: relative;
   text-align: center; }

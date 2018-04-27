@@ -29,15 +29,15 @@
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.prenom')}"
              th:errors="*{client.prenom}"></div>
     </div>
-    <div class="form-check form-group col-md-12">
-        <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="changePassword">
-            Souhaitez vous modifier votre mot de passe?
-        </label>
+    <div class="form-check col-12 align-self-center"
+        th:if="${action == 'update'}">
+        <input class="form-check-input" type="checkbox" name="changePassword" id ="changePassword">
+        <label class="form-check-label" for="changePassword">Cochez si vous souhaitez changer le mot de passe</label>
     </div>
     <div class="form-group col-md-6">
         <label th:for="password" th:text="#{client.password}"></label>
-        <input type="password" class="form-control" th:field="${client.password}" th:placeholder="#{client.password}" th:required="${action} == 'update' ? 'false' : 'true'">
+        <input type="password" class="form-control" th:field="${client.password}" th:placeholder="#{client.password}"
+               th:required="${action} == 'update' ? 'false' : 'true'">
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.password')}"
              th:errors="*{client.password}"></div>
     </div>
@@ -98,19 +98,20 @@
              th:errors="*{client.tel}"></div>
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6"
+         th:if="${countUser == false or session.client != null and session.client.droit == T(com.formation.boutique.enumerations.Droit).RULE_ADMIN }">
         <label th:for="droit" th:text="#{client.droit}"></label>
         <select class="custom-select" th:field="*{client.droit}">
-                <option th:value="${d}" th:text="#{${d}}"
-                        th:each="d : ${droit}"
-                        th:if="${countUser == false and d == T(com.formation.boutique.enumerations.Droit).RULE_ADMIN }" ></option>
             <option th:value="${d}" th:text="#{${d}}"
-                    th:each="d : ${droit}"
-                    th:if="${countUser == true and d != T(com.formation.boutique.enumerations.Droit).RULE_ADMIN }" ></option>
+                    th:each="d : ${droit}"></option>
         </select>
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.droit')}"
              th:errors="*{client.droit}"></div>
     </div>
-
-    <button type="submit" class="btn btn-primary" th:text="#{button.submit}"></button>
+        <input type="hidden"  name="droit"
+               th:if="${action == 'create' and session.client == null}"
+               th:value="${countUser == true and action == 'create' ? 'RULE_USER': ''}">
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary col align-self-center" th:text="#{button.submit}"></button>
+    </div>
 </form>
